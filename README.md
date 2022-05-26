@@ -19,18 +19,18 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 Rotas da aplicação
 
-#### POST - /todos/{userid}
+#### POST - `/todos/{userid}`
 
 - Essa rota deve receber o `id` de um usuário pelo `pathParameters` (você pode criar esse id manualmente apenas para preencher o campo) e os seguintes campos no corpo da requisição: `title` e `deadline`, onde deadline é a data limite para o todo.
 
-- O todo deverá ser salvo com os seguintes campos no DynamoDB:
+#### O todo deverá ser salvo com os seguintes campos no DynamoDB:
 
 - id: 'uuid', // id gerado para garantir um único todo com o mesmo id
 - user_id: 'uuid' // id do usuário recebido no pathParameters
 - title: 'Nome da tarefa',
 - done: false, // inicie sempre como false
 - deadline: new Date(deadline)
-#### GET- /todos/{userid}
+#### GET- `/todos/{userid}`
 
 - Essa rota deve receber o `id` de um usuário pelo `pathParameters` (o mesmo id que foi usado para criar algum todo).
 - A rota deve retornar os todos que possuírem o `user_id` igual ao `id` recebido pelos parâmetros.
