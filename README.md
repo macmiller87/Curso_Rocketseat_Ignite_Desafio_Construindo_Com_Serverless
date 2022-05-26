@@ -25,13 +25,11 @@ Rotas da aplicação
 
 - O todo deverá ser salvo com os seguintes campos no DynamoDB:
 
-{ 
-    -	id: 'uuid', // id gerado para garantir um único todo com o mesmo id
-    -	user_id: 'uuid' // id do usuário recebido no pathParameters
-    -	title: 'Nome da tarefa',
-    -	done: false, // inicie sempre como false
-    -	deadline: new Date(deadline)
-}
+- id: 'uuid', // id gerado para garantir um único todo com o mesmo id
+- user_id: 'uuid' // id do usuário recebido no pathParameters
+- title: 'Nome da tarefa',
+- done: false, // inicie sempre como false
+- deadline: new Date(deadline)
 #### GET- /todos/{userid}
 
 - Essa rota deve receber o `id` de um usuário pelo `pathParameters` (o mesmo id que foi usado para criar algum todo).
