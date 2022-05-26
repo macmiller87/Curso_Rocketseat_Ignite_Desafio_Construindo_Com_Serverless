@@ -12,47 +12,60 @@ export const handle = async (event: APIGatewayEvent)   => {
     const { title, deadline } = JSON.parse(event.body) as ICreateTodo;
     const { user_id } = event.pathParameters;
 
-    const response = await document.query({
+    const todo = {
+        id: uuidV4(),
+        user_id,
+        title,
+        done: false,
+        deadline: new Date(deadline).toUTCString()
+    }
+
+    await document.put({
         TableName: "usersTodo",
-        KeyConditionExpression: "user_id = :id",
-        ExpressionAttributeValues: {
-            ":id": user_id
-        }
+        Item: todo
     }).promise();
 
-    const todoAlreadyExists = response.Items[0];
+    if(todo) {
 
-    if(!todoAlreadyExists) {
+        const getTodo = async (user_id: string) => {
 
-        const todo = {
-            id: uuidV4(),
-            user_id,
-            title,
-            done: false,
-            deadline: new Date(deadline)
+            const response = await document.query({
+                TableName: "usersTodo",
+                KeyConditionExpression: "user_id = :id",
+                ExpressionAttributeValues: {
+                    ":id": user_id
+                }
+            }).promise();
+    
+            return response.Items[0] as ICreateTodo;
         }
 
-        await document.put({
-            TableName: "usersTodo",
-            Item: todo
-        }).promise();
+        const Todo = await getTodo(user_id);
 
-        
-        return {
-            statusCode: 201,
-            body: JSON.stringify({
-                message: "Todo created whit succes!",
-                todo: todo
-            })
+        if(Todo) {
+
+            await document.update({
+                TableName: "usersTodo",
+                Key: {
+                    user_id: user_id
+                },
+                UpdateExpression: "set done = :true",
+                ExpressionAttributeValues: {
+                    ":true": true
+                },
+                ReturnValues: "UPDATED_NEW"
+            }).promise();
+
+            const updateTodo = await getTodo(user_id);
+
+            return {
+                statusCode: 201,
+                body: JSON.stringify({
+                    message: "Todo created whit succes!",
+                    todo: updateTodo
+                })
+            }
         };
+    };
 
-    } else {
-
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                message: "Users todo already exists!"
-            })
-        };
-    }
-}
+};
