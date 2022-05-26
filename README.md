@@ -1,4 +1,4 @@
-## Projeto API Construindo_Com_Serverless
+## Projeto API Construindo Com Serverless
 
 - Nessa aplicação foi feita uma API utilizando o Framework Serverless, que é um gerenciador de tarefas TODO, que permite criar Todos e pesquisar Todos criados.
 
@@ -26,11 +26,11 @@ Rotas da aplicação
 - O todo deverá ser salvo com os seguintes campos no DynamoDB:
 
 { 
-	id: 'uuid', // id gerado para garantir um único todo com o mesmo id
-	user_id: 'uuid' // id do usuário recebido no pathParameters
-	title: 'Nome da tarefa',
-	done: false, // inicie sempre como false
-	deadline: new Date(deadline)
+    -	id: 'uuid', // id gerado para garantir um único todo com o mesmo id
+    -	user_id: 'uuid' // id do usuário recebido no pathParameters
+    -	title: 'Nome da tarefa',
+    -	done: false, // inicie sempre como false
+    -	deadline: new Date(deadline)
 }
 #### GET- /todos/{userid}
 
